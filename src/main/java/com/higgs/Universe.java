@@ -8,6 +8,7 @@ import main.java.com.higgs.utils.Logger;
 import main.java.com.higgs.utils.Utils;
 import main.java.com.higgs.utils.Vector;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -28,10 +29,14 @@ public class Universe {
         INSTANCE = this;
         VIEWPORT = new Viewport();
         createMaterials();
+        addBodies();
+        loop();
+    }
+
+    private void addBodies() {
 //        spawnTwoBody();
 //        spawnTest();
         spawnRandom();
-        loop();
     }
 
     private void loop() {
@@ -54,7 +59,8 @@ public class Universe {
                     Thread.sleep(delta / 1000000);
                 } catch(InterruptedException ignored) { }
             } else {
-                displayFPS = Math.abs(1 / (double)(delta / 1000000));
+                DecimalFormat df = new DecimalFormat(".##");
+                displayFPS = Double.parseDouble(df.format(1 / ((double)elapsed / 1000000000)));
                 try {
                     Thread.sleep(0);
                 } catch(InterruptedException ignored) { }
