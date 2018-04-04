@@ -42,37 +42,6 @@ public class Particle extends Actor {
 
     private void inelasticCollide() {
         ArrayList<Actor> actors = Universe.getInstance().getActorsInRange(this, mass + 1);
-//        if(!actors.isEmpty()) {
-//            Actor toAbsorb = null;
-//            for(Actor actor : actors) {
-//                if(toAbsorb == null)
-//                    toAbsorb = actor;
-//
-//                if(Utils.dist(actor.getPos(), getPos()) < Utils.dist(toAbsorb.getPos(), getPos())) {
-//                    toAbsorb = actor;
-//                }
-//            }
-//
-//            if(toAbsorb instanceof Particle) {
-//                Particle p = (Particle)toAbsorb;
-//                if(p != this) {
-//                    double d = Utils.dist(pos, p.getPos());
-//                    if(d < getRadius() + p.getRadius()) {
-//                        double nm = mass + p.getMass();
-//                        //following the formula: (m1v1x + m2v2x) / (m1 + m2), (m1v1y + m2v2y) / (m1 + m2)
-//                        Vector resultantV = new Vector(((mass * vel.x) + (p.getMass() * p.getVel().x)) / nm, ((mass * vel.y) + (p.getMass() * p.getVel().y)) / nm, 0);
-//
-//                        Particle amassed = new Particle(resultantV, nm, material);
-//
-//                        Vector npos = mass >= p.getMass() ? pos : p.getPos();
-//
-//                        Universe.getInstance().removeObject(this);
-//                        Universe.getInstance().removeObject(toAbsorb);
-//                        Universe.getInstance().addObject(amassed, npos);
-//                    }
-//                }
-//            }
-//        }
         double massBefore = Universe.getInstance().getTotalMass();
         if(!actors.isEmpty()) {
             for(Actor actor : actors) {
