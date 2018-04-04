@@ -14,7 +14,7 @@ public class InputListener implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
         switch(code) {
-            case KeyEvent.VK_S: {
+            case KeyEvent.VK_F12: {
                 Viewport.getCanvas().screenshot();
                 break;
             }
