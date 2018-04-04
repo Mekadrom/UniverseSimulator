@@ -36,12 +36,19 @@ public class Canvas extends JPanel {
         g.fillRect(0, 0, (int)Viewport.SIZE.getWidth(), (int)Viewport.SIZE.getHeight());
         g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
+//        for(Actor actor : new ArrayList<>(Universe.getInstance().getActors())) {
+//            BufferedImage imgNew = new BufferedImage(actor.getImage().getWidth(), actor.getImage().getHeight(), actor.getImage().getType());
+//            Graphics2D g2d = (Graphics2D)imgNew.getGraphics();
+//            g2d.rotate(actor.getRotation(), actor.getImage().getWidth()/2, actor.getImage().getHeight()/2);
+//            g2d.drawImage(actor.getImage(), 0, 0, null);
+//            g.drawImage(imgNew, (int)(actor.getX() - (actor.getImage().getWidth() / 2)), (int)(actor.getY() - (actor.getImage().getHeight() / 2)), null);
+//        }
+
         for(Actor actor : new ArrayList<>(Universe.getInstance().getActors())) {
-            BufferedImage imgNew = new BufferedImage(actor.getImage().getWidth(), actor.getImage().getHeight(), actor.getImage().getType());
-            Graphics2D g2d = (Graphics2D)imgNew.getGraphics();
-            g2d.rotate(actor.getRotation(), actor.getImage().getWidth()/2, actor.getImage().getHeight()/2);
-            g2d.drawImage(actor.getImage(), 0, 0, null);
-            g.drawImage(imgNew, (int)(actor.getX() - (actor.getImage().getWidth() / 2)), (int)(actor.getY() - (actor.getImage().getHeight() / 2)), null);
+            g.rotate(actor.getRotation(), actor.getImage().getWidth() / 2, actor.getImage().getHeight() / 2);
+            g.drawImage(actor.getImage(), 0, 0, null);
+            g.drawImage(actor.getImage(), (int)(actor.getX() - (actor.getImage().getWidth() / 2)), (int)(actor.getY() - (actor.getImage().getHeight() / 2)), null);
+            g.rotate(-actor.getRotation(), -(actor.getImage().getWidth() / 2), -(actor.getImage().getHeight() / 2));
         }
 
         String fps = String.valueOf(Universe.getInstance().getDisplayFPS() + " Total mass: " + Universe.getInstance().getTotalMass());
