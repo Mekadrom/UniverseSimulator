@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Canvas extends JPanel {
-    BufferedImage lastImage;
-
     Canvas() {
         setFocusable(true);
         setVisible(true);
@@ -48,7 +46,6 @@ public class Canvas extends JPanel {
         g.drawString(fps, 4, 16);
         g.dispose();
 
-        lastImage = imageResult;
         return imageResult;
     }
 
@@ -59,7 +56,7 @@ public class Canvas extends JPanel {
         File outputFile = new File("Screenshot-" + dateFormat.format(date) + ".png");
 
         try {
-            ImageIO.write(lastImage, "png", outputFile);
+            ImageIO.write(paint(), "png", outputFile);
             System.out.println("Screenshot saved to: " + outputFile.getName());
         } catch(IOException e) {
             System.out.println("Could not save screenshot.");
