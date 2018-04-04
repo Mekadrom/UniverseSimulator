@@ -40,8 +40,12 @@ public class Particle extends Actor {
         inelasticCollide();
     }
 
+    private void elasticCollide() {
+
+    }
+
     private void inelasticCollide() {
-        ArrayList<Actor> actors = Universe.getInstance().getActorsInRange(this, mass + 1);
+        ArrayList<Actor> actors = Universe.getInstance().getActorsInRange(this, getRadius() * 2);
         double massBefore = Universe.getInstance().getTotalMass();
         if(!actors.isEmpty()) {
             for(Actor actor : actors) {
@@ -51,12 +55,13 @@ public class Particle extends Actor {
                         double d = Utils.dist(getPos(), p.getPos());
                         if(d < getRadius() + p.getRadius()) {
                             double nm = getMass() + p.getMass();
-                            //following the formula: (m1v1x + m2v2x) / (m1 + m2), (m1v1y + m2v2y) / (m1 + m2)
+                            //following the formula for conservation of momentum in an inelastic collision: (m1v1x + m2v2x) / (m1 + m2), (m1v1y + m2v2y) / (m1 + m2)
                             Vector resultantV = new Vector(((getMass() * getXVel()) + (p.getMass() * p.getXVel())) / nm, ((getMass() * getYVel()) + (p.getMass() * p.getYVel())) / nm, 0);
 
                             Particle amassed = new Particle(resultantV, nm, getMaterial());
 
-                            Vector npos = getMass() >= p.getMass() ? getPos() : p.getPos();
+                            //use equation for center of mass between two discrete objects to find new particle's position
+                            Vector npos = new Vector(((getMass() * getX()) + (p.getMass() * p.getX())) / nm, ((getMass() * getY()) + (p.getMass() * p.getY())) / nm, 0);
 
                             Universe.getInstance().removeObject(this);
                             Universe.getInstance().removeObject(actor);
@@ -67,8 +72,6 @@ public class Particle extends Actor {
                     }
                 }
             }
-
-
         }
     }
 
