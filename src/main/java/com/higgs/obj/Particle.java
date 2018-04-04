@@ -3,11 +3,9 @@ package main.java.com.higgs.obj;
 import main.java.com.higgs.Universe;
 import main.java.com.higgs.graphics.Viewport;
 import main.java.com.higgs.utils.Constants;
-import main.java.com.higgs.utils.Logger;
 import main.java.com.higgs.utils.Utils;
 import main.java.com.higgs.utils.Vector;
 
-import javax.rmi.CORBA.Util;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -16,21 +14,24 @@ public class Particle extends Actor {
     private double mass;
     private Material material;
 
-    public Particle(Vector vel, double mass, Material material) {
+    public Particle(Vector vel, double omega, double mass, Material material) {
         this.vel = vel;
+        this.omega = omega;
         this.mass = mass;
         this.material = material;
 
-        Logger.log("Mass/diameter: " + mass);
+//        Logger.log("Mass/diameter: " + mass);
+//        Logger.log("Rotational velocity: " + omega);
 
         createImage();
     }
 
     @Override
     public void act() {
-        setPosition(Vector.add(pos, vel));
         collide();
         gravity();
+        setPosition(Vector.add(pos, vel));
+        rotate(omega);
     }
 
     @Override
@@ -55,13 +56,27 @@ public class Particle extends Actor {
                         double d = Utils.dist(getPos(), p.getPos());
                         if(d < getRadius() + p.getRadius()) {
                             double nm = getMass() + p.getMass();
-                            //following the formula for conservation of momentum in an inelastic collision: (m1v1x + m2v2x) / (m1 + m2), (m1v1y + m2v2y) / (m1 + m2)
-                            Vector resultantV = new Vector(((getMass() * getXVel()) + (p.getMass() * p.getXVel())) / nm, ((getMass() * getYVel()) + (p.getMass() * p.getYVel())) / nm, 0);
+                            double xdist = p.getX() - getX(), ydist = p.getY() - getY();
+                            //define new coordinate axes with x axis being tangent to both particles' surfaces and the y axis being perpendicular to that using the angle variables theta and phi
+                            double phi = Math.atan2(ydist, xdist);
+                            double theta = phi + (Math.PI / 2);
+                            //the projection of this particle's total velocity onto the y axis of the new coordinate axes
+                            double vnormal = getYVel() * Math.sin(theta);
+                            //velocity to be used for conservation of momentum; velocity applied along the line between the two particles' centers of mass; naming: velocity before projection
+                            Vector velBProject = new Vector(vnormal * Math.cos(-theta), vnormal * Math.sin(-theta), 0);
 
-                            Particle amassed = new Particle(resultantV, nm, getMaterial());
+                            //conservation of momentum
+                            double rvx = ((getMass() * velBProject.x * Math.cos(phi)) + (p.getMass() * p.getXVel() * Math.cos(phi))) / nm;
+                            double rvy = ((getMass() * velBProject.y * Math.sin(phi)) + (p.getMass() * p.getYVel() * Math.sin(phi))) / nm;
+
+                            Vector velAProject = new Vector(rvx, rvy, 0);
+
+                            double rotvel = getXVel() * Math.cos(theta) + (getMass() > p.getMass() ? getOmega() : p.getOmega());
+
+                            Particle amassed = new Particle(velAProject, rotvel, nm, material);
 
                             //use equation for center of mass between two discrete objects to find new particle's position
-                            Vector npos = new Vector(((getMass() * getX()) + (p.getMass() * p.getX())) / nm, ((getMass() * getY()) + (p.getMass() * p.getY())) / nm, 0);
+                            Vector npos = getMass() > p.getMass() ? getPos() : p.getPos(); //new Vector(((getMass() * getX()) + (p.getMass() * p.getX())) / nm, ((getMass() * getY()) + (p.getMass() * p.getY())) / nm, 0);
 
                             Universe.getInstance().removeObject(this);
                             Universe.getInstance().removeObject(actor);
@@ -74,6 +89,37 @@ public class Particle extends Actor {
             }
         }
     }
+
+//    private void inelasticCollide() {
+//        ArrayList<Actor> actors = Universe.getInstance().getActorsInRange(this, getRadius() * 2);
+//        double massBefore = Universe.getInstance().getTotalMass();
+//        if(!actors.isEmpty()) {
+//            for(Actor actor : actors) {
+//                if(actor instanceof Particle) {
+//                    Particle p = (Particle)actor;
+//                    if(p != this) {
+//                        double d = Utils.dist(getPos(), p.getPos());
+//                        if(d < getRadius() + p.getRadius()) {
+//                            double nm = getMass() + p.getMass();
+//                            //following the formula for conservation of momentum in an inelastic collision: (m1v1x + m2v2x) / (m1 + m2), (m1v1y + m2v2y) / (m1 + m2)
+//                            Vector resultantV = new Vector(((getMass() * getXVel()) + (p.getMass() * p.getXVel())) / nm, ((getMass() * getYVel()) + (p.getMass() * p.getYVel())) / nm, 0);
+//
+//                            Particle amassed = new Particle(resultantV, nm, getMaterial());
+//
+//                            //use equation for center of mass between two discrete objects to find new particle's position
+//                            Vector npos = new Vector(((getMass() * getX()) + (p.getMass() * p.getX())) / nm, ((getMass() * getY()) + (p.getMass() * p.getY())) / nm, 0);
+//
+//                            Universe.getInstance().removeObject(this);
+//                            Universe.getInstance().removeObject(actor);
+//                            Universe.getInstance().addObject(amassed, npos);
+//
+//                            amassed.removeMass(Universe.getInstance().getTotalMass() - massBefore);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private void collideWindow() {
         double vx = vel.x, vy = vel.y;

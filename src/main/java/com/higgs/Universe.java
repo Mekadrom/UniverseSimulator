@@ -85,28 +85,28 @@ public class Universe {
     }
 
     private void spawnRandom() {
-        int numObj = 1000;
+        int numObj = 500;
         for(int i = 0; i < numObj; i++) {
             Logger.log("Creating particle: " + i + "/" + numObj);
             Vector pos = getRandomCoord();
             double range = 3;
             double vx = Math.random() * range;
             double vy = Math.random() * range;
-            addObject(new Particle(new Vector(vx - (range / 2), vy - (range / 2), 0), 1, Material.MATERIAL_REGISTRY.get(0)), pos);
+            addObject(new Particle(new Vector(vx - (range / 2), vy - (range / 2), 0), 0, 1, Material.MATERIAL_REGISTRY.get(0)), pos);
         }
         Logger.log("Starting mass: " + getTotalMass());
     }
 
     private void spawnTest() {
-        addObject(new Particle(new Vector(1, 1, 0), 5, Material.MATERIAL_REGISTRY.get(0)), new Vector(130, 130, 0));
-        addObject(new Particle(new Vector(-1, -1, 0), 5, Material.MATERIAL_REGISTRY.get(0)), new Vector(630, 630, 0));
-        addObject(new Particle(new Vector(1, -1, 0), 5, Material.MATERIAL_REGISTRY.get(0)), new Vector(130, 630, 0));
-        addObject(new Particle(new Vector(-1, 1, 0), 5, Material.MATERIAL_REGISTRY.get(0)), new Vector(630, 130, 0));
+        addObject(new Particle(new Vector(1, 1, 0), 0, 5, Material.MATERIAL_REGISTRY.get(0)), new Vector(130, 130, 0));
+        addObject(new Particle(new Vector(-1, -1, 0), 0, 5, Material.MATERIAL_REGISTRY.get(0)), new Vector(630, 630, 0));
+        addObject(new Particle(new Vector(1, -1, 0), 0, 5, Material.MATERIAL_REGISTRY.get(0)), new Vector(130, 630, 0));
+        addObject(new Particle(new Vector(-1, 1, 0), 0, 5, Material.MATERIAL_REGISTRY.get(0)), new Vector(630, 130, 0));
     }
 
     private void spawnTwoBody() {
-        addObject(new Particle(new Vector(0.75, 0, 0), 5, Material.MATERIAL_REGISTRY.get(0)), new Vector(480, 200, 0));
-        addObject(new Particle(new Vector(0 , 0, 0), 100, Material.MATERIAL_REGISTRY.get(0)), new Vector(480, 400, 0));
+        addObject(new Particle(new Vector(0.75, 0, 0), 0, 5, Material.MATERIAL_REGISTRY.get(0)), new Vector(480, 200, 0));
+        addObject(new Particle(new Vector(0 , 0, 0), 0, 100, Material.MATERIAL_REGISTRY.get(0)), new Vector(480, 400, 0));
     }
 
     private void spawnSolarSystem() {
