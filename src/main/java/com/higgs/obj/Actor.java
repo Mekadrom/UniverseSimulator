@@ -94,9 +94,9 @@ public abstract class Actor {
         this.cm = cm;
     }
 
-    @Override
     public String toString() {
         String s = super.toString();
-        return "Pos: " + pos.toString() + " Vel: " +vel.toString() + " ID: " + s.substring(s.length() - 8);
+//        return "Pos: " + pos.toString() + " Vel: " + vel.toString() + " ID: " + s.substring(s.length() - 8);
+        return s.substring(s.length() - 8);
     }
 }

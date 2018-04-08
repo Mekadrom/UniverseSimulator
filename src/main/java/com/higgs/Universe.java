@@ -74,9 +74,17 @@ public class Universe {
             myMap.put(actors.get(i), i);
         }
 
+        int index = 0;
         Iterator<Actor> iterator = myMap.keySet().iterator();
         while(iterator.hasNext()) {
-            iterator.next().act();
+            if(index < actors.size()) {
+                if(actors.get(index) != null) {
+                    iterator.next().act();
+                }
+            } else {
+                break;
+            }
+            index++;
         }
     }
 
@@ -86,13 +94,23 @@ public class Universe {
 
     private void spawnRandom() {
         int numObj = 500;
+        double totalMass = 1000.0;
+        double totalKineticEnergy = 1000;
+        double maxMass = 10;
+        double maxKineticEnergy = 10;
+
         for(int i = 0; i < numObj; i++) {
             Logger.log("Creating particle: " + i + "/" + numObj);
             Vector pos = getRandomCoord();
             double range = 3;
-            double vx = Math.random() * range;
-            double vy = Math.random() * range;
-            addObject(new Particle(new Vector(vx - (range / 2), vy - (range / 2), 0), 0, 1, Material.MATERIAL_REGISTRY.get(0)), pos);
+            double mass = 1;//Math.random() * maxMass;
+            double ke = Math.random() * maxKineticEnergy;
+//            double vx = Math.random() * range;
+//            double vy = Math.random() * range;
+//            addObject(new Particle(new Vector(vx - (range / 2), vy - (range / 2), 0), 0, mass, Material.MATERIAL_REGISTRY.get(0)), pos);
+            Particle p = new Particle(new Vector(1, Math.random() * (2*Math.PI)), 0, mass, Material.MATERIAL_REGISTRY.get(0));
+            addObject(p, pos);
+            p.addKineticEnergy(ke);
         }
         Logger.log("Starting mass: " + getTotalMass());
     }
@@ -102,6 +120,10 @@ public class Universe {
         addObject(new Particle(new Vector(-1, -1, 0), 0, 5, Material.MATERIAL_REGISTRY.get(0)), new Vector(630, 630, 0));
         addObject(new Particle(new Vector(1, -1, 0), 0, 5, Material.MATERIAL_REGISTRY.get(0)), new Vector(130, 630, 0));
         addObject(new Particle(new Vector(-1, 1, 0), 0, 5, Material.MATERIAL_REGISTRY.get(0)), new Vector(630, 130, 0));
+        addObject(new Particle(new Vector(0, 1, 0), 0, 10, Material.MATERIAL_REGISTRY.get(0)), new Vector(683, 300, 0));
+        addObject(new Particle(new Vector(0, -1, 0), 0, 10, Material.MATERIAL_REGISTRY.get(0)), new Vector(683, 500, 0));
+        addObject(new Particle(new Vector(1, 0, 0), 0, 10, Material.MATERIAL_REGISTRY.get(0)), new Vector(583, 400, 0));
+        addObject(new Particle(new Vector(-2, 0, 0), 0, 10, Material.MATERIAL_REGISTRY.get(0)), new Vector(783, 400, 0));
     }
 
     private void spawnTwoBody() {
@@ -123,6 +145,7 @@ public class Universe {
             if(actors != null) {
                 if(!actors.isEmpty()) {
                     if(actors.contains(actor)) {
+//                        Logger.log("Goodbye " + actor.toString() + "!");
                         actors.remove(actor);
                     }
                 }
