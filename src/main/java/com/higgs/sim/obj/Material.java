@@ -1,4 +1,4 @@
-package main.java.com.higgs.obj;
+package com.higgs.sim.obj;
 
 import java.util.ArrayList;
 

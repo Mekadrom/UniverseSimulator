@@ -1,13 +1,14 @@
-package main.java.com.higgs.obj;
+package com.higgs.sim.obj;
 
-import main.java.com.higgs.Universe;
-import main.java.com.higgs.graphics.Viewport;
-import main.java.com.higgs.utils.Constants;
-import main.java.com.higgs.utils.Logger;
-import main.java.com.higgs.utils.Utils;
-import main.java.com.higgs.utils.Vector;
+import com.higgs.sim.Universe;
+import com.higgs.sim.graphics.Viewport;
+import com.higgs.sim.utils.Constants;
+import com.higgs.sim.utils.Logger;
+import com.higgs.sim.utils.Utils;
+import com.higgs.sim.utils.Vector;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 

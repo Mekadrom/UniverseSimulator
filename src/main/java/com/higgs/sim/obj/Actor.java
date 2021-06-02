@@ -1,6 +1,6 @@
-package main.java.com.higgs.obj;
+package com.higgs.sim.obj;
 
-import main.java.com.higgs.utils.Vector;
+import com.higgs.sim.utils.Vector;
 
 import java.awt.image.BufferedImage;
 

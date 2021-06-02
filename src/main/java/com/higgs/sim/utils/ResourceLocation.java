@@ -1,4 +1,4 @@
-package main.java.com.higgs.utils;
+package com.higgs.sim.utils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

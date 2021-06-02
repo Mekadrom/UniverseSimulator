@@ -1,4 +1,4 @@
-package main.java.com.higgs.utils;
+package com.higgs.sim.utils;
 
 public class Vector {
     public double x;

@@ -1,4 +1,4 @@
-package main.java.com.higgs.utils;
+package com.higgs.sim.utils;
 
 public class Utils {
     private static String workingDir = System.getProperty("user.dir");

@@ -1,10 +1,12 @@
-package main.java.com.higgs.graphics;
+package com.higgs.sim.graphics;
 
-import main.java.com.higgs.input.InputListener;
-import main.java.com.higgs.utils.ResourceLocation;
+import com.higgs.sim.input.InputListener;
+import com.higgs.sim.utils.ResourceLocation;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 public class Viewport extends JFrame {
     public static Dimension SIZE = /**Toolkit.getDefaultToolkit().getScreenSize();**/new Dimension(1366, 820);

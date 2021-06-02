@@ -1,6 +1,6 @@
-package main.java.com.higgs.input;
+package com.higgs.sim.input;
 
-import main.java.com.higgs.graphics.Viewport;
+import com.higgs.sim.graphics.Viewport;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

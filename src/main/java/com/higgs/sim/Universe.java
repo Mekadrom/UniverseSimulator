@@ -1,12 +1,12 @@
-package main.java.com.higgs;
+package com.higgs.sim;
 
-import main.java.com.higgs.graphics.Viewport;
-import main.java.com.higgs.obj.Actor;
-import main.java.com.higgs.obj.Material;
-import main.java.com.higgs.obj.Particle;
-import main.java.com.higgs.utils.Logger;
-import main.java.com.higgs.utils.Utils;
-import main.java.com.higgs.utils.Vector;
+import com.higgs.sim.graphics.Viewport;
+import com.higgs.sim.obj.Actor;
+import com.higgs.sim.obj.Material;
+import com.higgs.sim.obj.Particle;
+import com.higgs.sim.utils.Logger;
+import com.higgs.sim.utils.Utils;
+import com.higgs.sim.utils.Vector;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

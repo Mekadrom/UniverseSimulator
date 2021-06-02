@@ -1,4 +1,4 @@
-package main.java.com.higgs.utils;
+package com.higgs.sim.utils;
 
 public class Constants {
     public static final double BIG_G = 1.0;

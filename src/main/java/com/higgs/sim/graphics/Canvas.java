@@ -1,14 +1,15 @@
-package main.java.com.higgs.graphics;
+package com.higgs.sim.graphics;
 
-import main.java.com.higgs.Universe;
-import main.java.com.higgs.obj.Actor;
-import main.java.com.higgs.obj.Particle;
+import com.higgs.sim.Universe;
+import com.higgs.sim.obj.Actor;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Path2D;
+import javax.swing.JPanel;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
