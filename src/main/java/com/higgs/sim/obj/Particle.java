@@ -14,9 +14,9 @@ import java.util.ArrayList;
 
 public class Particle extends Actor {
     private double mass;
-    private Material material;
+    private final Material material;
 
-    public Particle(Vector vel, double omega, double mass, Material material) {
+    public Particle(final Vector vel, final double omega, final double mass, final Material material) {
         this.vel = vel;
         this.omega = omega;
         this.mass = mass;
@@ -25,52 +25,52 @@ public class Particle extends Actor {
 //        Logger.log("Mass/diameter: " + mass);
 //        Logger.log("Rotational velocity: " + omega);
 //        Logger.log("Velocity: " + vel);
-        String s = ((Object)this).toString();
+        final String s = ((Object) this).toString();
         Logger.log("Hello! I am " + s.substring(s.length() - 8));
 
-        createImage();
+        this.createImage();
     }
 
     @Override
     public void act() {
-        collide();
-        fourForces();
-        setPosition(Vector.add(pos, vel));
-        rotate(omega);
+        this.collide();
+        this.fourForces();
+        this.setPosition(Vector.add(this.pos, this.vel));
+        this.rotate(this.omega);
     }
 
     @Override
     void collide() {
-        collideWindow();
+        this.collideWindow();
 //        elasticCollide();
-        inelasticCollide();
+        this.inelasticCollide();
     }
 
     private void fourForces() {
-        gravity();
+        this.gravity();
 //        orbit();
     }
 
     private void elasticCollide() {
-        ArrayList<Actor> actors = Universe.getInstance().getActorsInRange(this, getRadius() * 2);
-        if(!actors.isEmpty()) {
+        final ArrayList<Actor> actors = Universe.getInstance().getActorsInRange(this, this.getRadius() * 2);
+        if (!actors.isEmpty()) {
 //            for(Actor actor : actors) {
-            Actor actor = actors.get(0);
-                if(actor instanceof Particle) {
-                    Particle p = (Particle)actor;
-                    double d = Utils.dist(getPos(), p.getPos());
-                    if(d < getRadius() + p.getRadius()) {
-                        double xdist = p.getX() - getX();
-                        double ydist = p.getY() - getY();
+            final Actor actor = actors.get(0);
+            if (actor instanceof Particle) {
+                final Particle p = (Particle) actor;
+                final double d = Utils.dist(this.getPos(), p.getPos());
+                if (d < this.getRadius() + p.getRadius()) {
+                    final double xdist = p.getX() - this.getX();
+                    final double ydist = p.getY() - this.getY();
 
-                        double m1 = getMass();
-                        double m2 = p.getMass();
-                        double nm = getMass() + p.getMass();
+                    final double m1 = this.getMass();
+                    final double m2 = p.getMass();
+                    final double nm = this.getMass() + p.getMass();
 
-                        Vector v1 = getVel();
-                        Vector v2 = p.getVel();
+                    final Vector v1 = this.getVel();
+                    final Vector v2 = p.getVel();
 
-                        double phi = Math.atan2(ydist, xdist);
+                    final double phi = Math.atan2(ydist, xdist);
 
 //                        double rvx1 = (((v1.getLength()*Math.cos(v1.getTheta()-phi)*(m1-m2)) + (2*m2*v2.getLength()*Math.cos(v2.getTheta()-phi))) / nm)*Math.cos(phi)
 //                                - v1.getLength()*Math.sin(v1.getTheta()-phi)*Math.sin(phi);
@@ -88,13 +88,13 @@ public class Particle extends Actor {
 //                        Vector gravForce2 = new Vector(-g2.x, -g2.y, -g2.z);
 //                        impartForce(gravForce1.getLength(), gravForce1.getTheta());
 //                        impartForce(gravForce2.getLength(), gravForce2.getTheta());
-                    }
                 }
+            }
 //            }
         }
     }
 
-//    private void inelasticCollide() {
+    //    private void inelasticCollide() {
 //        ArrayList<Actor> actors = Universe.getInstance().getActorsInRange(this, getRadius() * 2);
 //        double massBefore = Universe.getInstance().getTotalMass();
 //        if(!actors.isEmpty()) {
@@ -157,23 +157,23 @@ public class Particle extends Actor {
 //    }
 //
     private void inelasticCollide() {
-        ArrayList<Actor> actors = Universe.getInstance().getActorsInRange(this, getRadius() * 2);
-        double massBefore = Universe.getInstance().getTotalMass();
-        if(!actors.isEmpty()) {
-            for(Actor actor : actors) {
-                if(actor instanceof Particle) {
-                    Particle p = (Particle)actor;
-                    if(p != this) {
-                        double d = Utils.dist(getPos(), p.getPos());
-                        if(d < getRadius() + p.getRadius()) {
-                            double nm = getMass() + p.getMass();
+        final ArrayList<Actor> actors = Universe.getInstance().getActorsInRange(this, this.getRadius() * 2);
+        final double massBefore = Universe.getInstance().getTotalMass();
+        if (!actors.isEmpty()) {
+            for (final Actor actor : actors) {
+                if (actor instanceof Particle) {
+                    final Particle p = (Particle) actor;
+                    if (p != this) {
+                        final double d = Utils.dist(this.getPos(), p.getPos());
+                        if (d < this.getRadius() + p.getRadius()) {
+                            final double nm = this.getMass() + p.getMass();
                             //following the formula for conservation of momentum in an inelastic collision: (m1v1x + m2v2x) / (m1 + m2), (m1v1y + m2v2y) / (m1 + m2)
-                            Vector resultantV = new Vector(((getMass() * getXVel()) + (p.getMass() * p.getXVel())) / nm, ((getMass() * getYVel()) + (p.getMass() * p.getYVel())) / nm, 0);
+                            final Vector resultantV = new Vector(((this.getMass() * this.getXVel()) + (p.getMass() * p.getXVel())) / nm, ((this.getMass() * this.getYVel()) + (p.getMass() * p.getYVel())) / nm, 0);
 
-                            Particle amassed = new Particle(resultantV, 0, nm, getMaterial());
+                            final Particle amassed = new Particle(resultantV, 0, nm, this.getMaterial());
 
                             //use equation for center of mass between two discrete objects to find new particle's position
-                            Vector npos = new Vector(((getMass() * getX()) + (p.getMass() * p.getX())) / nm, ((getMass() * getY()) + (p.getMass() * p.getY())) / nm, 0);
+                            final Vector npos = new Vector(((this.getMass() * this.getX()) + (p.getMass() * p.getX())) / nm, ((this.getMass() * this.getY()) + (p.getMass() * p.getY())) / nm, 0);
 
                             Universe.getInstance().removeObject(this);
                             Universe.getInstance().removeObject(actor);
@@ -244,26 +244,26 @@ public class Particle extends Actor {
 //    }
 
     private void collideWindow() {
-        double vx = vel.x, vy = vel.y;
+        double vx = this.vel.x, vy = this.vel.y;
 
-        if(getX() <= 0 || getX() >= Viewport.SIZE.getWidth()) vx = -vx;
-        if(getY() <= 0 || getY() >= Viewport.SIZE.getHeight()) vy = -vy;
+        if (this.getX() <= 0 || this.getX() >= Viewport.SIZE.getWidth()) vx = -vx;
+        if (this.getY() <= 0 || this.getY() >= Viewport.SIZE.getHeight()) vy = -vy;
 
-        vel = new Vector(vx, vy, 0);
+        this.vel = new Vector(vx, vy, 0);
     }
 
     private void orbit() {
-        Particle p = new Particle(new Vector(0, 0, 0), 0, 100, Material.MATERIAL_REGISTRY.get(0));
+        final Particle p = new Particle(new Vector(0, 0, 0), 0, 100, Material.MATERIAL_REGISTRY.get(0));
         p.setPosition(new Vector(Viewport.SIZE.getWidth() / 2, Viewport.SIZE.getHeight() / 2, 0));
-        applyGravitationalForce(p);
+        this.applyGravitationalForce(p);
     }
 
     private void gravity() {
-        for(Actor a : Universe.getInstance().getActors()) {
-            if(a instanceof Particle) {
-                if(a != this) {
-                    Particle p = (Particle)a;
-                    applyGravitationalForce(p);
+        for (final Actor a : Universe.getInstance().getActors()) {
+            if (a instanceof Particle) {
+                if (a != this) {
+                    final Particle p = (Particle) a;
+                    this.applyGravitationalForce(p);
 //                    Vector gforce = getGravitationalForce(p);
 //                    impartForce(gforce.getLength(), gforce.getTheta());
                 }
@@ -285,65 +285,65 @@ public class Particle extends Actor {
 //        vel = new Vector(vx, vy, 0);
 //    }
 
-    private void applyGravitationalForce(Particle p) {
-        double r = Utils.dist(pos, p.getPos());
-        double gmm = Constants.BIG_G * mass * p.getMass();
-        impartForce(gmm / Math.pow(r, 2), Math.atan2(p.getX() - getX(), p.getY() - getY()));
+    private void applyGravitationalForce(final Particle p) {
+        final double r = Utils.dist(this.pos, p.getPos());
+        final double gmm = Constants.BIG_G * this.mass * p.getMass();
+        this.impartForce(gmm / Math.pow(r, 2), Math.atan2(p.getX() - this.getX(), p.getY() - this.getY()));
     }
 
-    private void impartForce(double force, double angle) {
-        double vx = vel.x;
-        double vy = vel.y;
-        vx += (force*Math.sin(angle)) / mass;
-        vy += (force*Math.cos(angle)) / mass;
-        vel = new Vector(vx, vy, 0);
+    private void impartForce(final double force, final double angle) {
+        double vx = this.vel.x;
+        double vy = this.vel.y;
+        vx += (force * Math.sin(angle)) / this.mass;
+        vy += (force * Math.cos(angle)) / this.mass;
+        this.vel = new Vector(vx, vy, 0);
     }
 
-    private void accelerate(Vector force) {
-        setVelocity(new Vector(force.x / mass, force.y / mass, 0));
+    private void accelerate(final Vector force) {
+        this.setVelocity(new Vector(force.x / this.mass, force.y / this.mass, 0));
     }
 
     public double getMass() {
-        return mass;
+        return this.mass;
     }
 
     public double getRotInertia() {
-        return mass * Math.pow(getRadius(), 2);
+        return this.mass * Math.pow(this.getRadius(), 2);
     }
 
     public double getKineticEnergy() {
-        return (0.5 * mass * Math.pow(getSpeed(), 2));
+        return (0.5 * this.mass * Math.pow(this.getSpeed(), 2));
     }
 
-    public void addKineticEnergy(double ke) {
-        vel = Vector.setLength(vel, Math.sqrt((2 * ke) / mass));
+    public void addKineticEnergy(final double ke) {
+        this.vel = Vector.setLength(this.vel, Math.sqrt((2 * ke) / this.mass));
     }
 
     public double getTemperature() {
-        return ((2.0/3.0) * getKineticEnergy()) / Constants.BIG_R;
+        return ((2.0 / 3.0) * this.getKineticEnergy()) / Constants.BIG_R;
     }
 
     public double getArea() {
-        return mass / material.density;
+        return this.mass / this.material.density;
     }
 
     public double getRadius() {
-        return Math.sqrt(getArea() / Math.PI);
+        return Math.sqrt(this.getArea() / Math.PI);
     }
 
     public Material getMaterial() {
-        return material;
+        return this.material;
     }
 
-    public void removeMass(double mass) {
+    public void removeMass(final double mass) {
         this.mass -= mass;
-        createImage();
+        this.createImage();
     }
 
     public void createImage() {
-        BufferedImage image = new BufferedImage((int)((2*getRadius()) + 1), (int)((2*getRadius()) + 1), BufferedImage.TYPE_INT_ARGB);
+        final BufferedImage image = new BufferedImage((int) ((2 * this.getRadius()) + 1), (int) ((2 * this.getRadius()) + 1), BufferedImage.TYPE_INT_ARGB);
 //        BufferedImage image = new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = image.createGraphics();
+        final Graphics2D g = image.createGraphics();
         //for showing image box:
 //        g.setColor(Color.BLUE);
 //        g.fillRect(0, 0, image.getWidth(), image.getHeight());
@@ -352,6 +352,6 @@ public class Particle extends Actor {
 //        g.setColor(new Color((int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random() * 255)));
         g.fillOval(0, 0, image.getWidth(), image.getHeight());
         g.dispose();
-        setImage(image);
+        this.setImage(image);
     }
 }

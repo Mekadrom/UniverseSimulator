@@ -6,30 +6,30 @@ import java.io.File;
 import java.io.IOException;
 
 public class ResourceLocation {
-    private File resource;
-    private String dir;
+    private final File resource;
+    private final String dir;
 
-    public ResourceLocation(String dir) {
+    public ResourceLocation(final String dir) {
         this.dir = dir;
         this.resource = new File(ResourceLocation.getDefaultLocation() + dir);
     }
 
     public String getDirectory() {
-        return dir;
+        return this.dir;
     }
 
     public File getResource() {
-        return resource;
+        return this.resource;
     }
 
     private static String getDefaultLocation() {
         return Utils.getWorkingDir() + "/resources/";
     }
 
-    public static BufferedImage getImage(String path) {
+    public static BufferedImage getImage(final String path) {
         try {
             return ImageIO.read(new ResourceLocation(path).getResource());
-        } catch(IOException e) {
+        } catch (final IOException e) {
             return null;
         }
 

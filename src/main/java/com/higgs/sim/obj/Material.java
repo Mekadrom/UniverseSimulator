@@ -8,6 +8,6 @@ public class Material {
     public double density = 1; //stored in mass/area
 
     public Material() {
-        MATERIAL_REGISTRY.add(this);
+        Material.MATERIAL_REGISTRY.add(this);
     }
 }

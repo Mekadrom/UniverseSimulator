@@ -7,13 +7,13 @@ import java.awt.event.KeyListener;
 
 public class InputListener implements KeyListener {
     @Override
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(final KeyEvent e) {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-        int code = e.getKeyCode();
-        switch(code) {
+    public void keyPressed(final KeyEvent e) {
+        final int code = e.getKeyCode();
+        switch (code) {
             case KeyEvent.VK_F12: {
                 Viewport.getCanvas().screenshot();
                 break;
@@ -22,6 +22,6 @@ public class InputListener implements KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(final KeyEvent e) {
     }
 }

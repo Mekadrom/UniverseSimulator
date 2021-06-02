@@ -19,83 +19,83 @@ public abstract class Actor {
 
 
     public double getX() {
-        return pos.x;
+        return this.pos.x;
     }
 
     public double getY() {
-        return pos.y;
+        return this.pos.y;
     }
 
     public Vector getPos() {
-        return pos;
+        return this.pos;
     }
 
     public double getXVel() {
-        return vel.x;
+        return this.vel.x;
     }
 
     public double getYVel() {
-        return vel.y;
+        return this.vel.y;
     }
 
     public Vector getVel() {
-        return vel;
+        return this.vel;
     }
 
     public double getSpeed() {
-        return vel.getLength();
+        return this.vel.getLength();
     }
 
     public double getAngle() {
-        return vel.getTheta();
+        return this.vel.getTheta();
     }
 
     public double getOmega() {
-        return omega;
+        return this.omega;
     }
 
     public double getRotation() {
-        return rotation;
+        return this.rotation;
     }
 
     public Vector getCenterOfMass() {
-        return cm;
+        return this.cm;
     }
 
     public BufferedImage getImage() {
-        return image;
+        return this.image;
     }
 
-    public void setImage(BufferedImage image) {
+    public void setImage(final BufferedImage image) {
         this.image = image;
     }
 
-    public void setPosition(Vector pos) {
+    public void setPosition(final Vector pos) {
         this.pos = pos;
     }
 
-    public void setVelocity(Vector vel) {
+    public void setVelocity(final Vector vel) {
         this.vel = vel;
     }
 
-    public void rotate(double rotation) {
-        setRotation(getRotation() + rotation);
+    public void rotate(final double rotation) {
+        this.setRotation(this.getRotation() + rotation);
     }
 
-    public void setOmega(double omega) {
+    public void setOmega(final double omega) {
         this.omega = omega;
     }
 
-    public void setRotation(double rotation) {
+    public void setRotation(final double rotation) {
         this.rotation = rotation;
     }
 
-    public void setCenterofMass(Vector cm) {
+    public void setCenterofMass(final Vector cm) {
         this.cm = cm;
     }
 
     public String toString() {
-        String s = super.toString();
+        final String s = super.toString();
 //        return "Pos: " + pos.toString() + " Vel: " + vel.toString() + " ID: " + s.substring(s.length() - 8);
         return s.substring(s.length() - 8);
     }
