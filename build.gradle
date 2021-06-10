@@ -11,9 +11,16 @@ mainClassName = 'com.higgs.sim.Main'
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+    }
 }
 
 dependencies {
+    implementation 'com.github.Mekadrom:Staged:-SNAPSHOT'
+
+    implementation group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
 
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'

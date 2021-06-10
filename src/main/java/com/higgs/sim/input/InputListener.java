@@ -1,27 +1,15 @@
 package com.higgs.sim.input;
 
-import com.higgs.sim.graphics.Viewport;
+import com.higgs.staged.StagedActor;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class InputListener implements KeyListener {
+public class InputListener extends StagedActor {
     @Override
-    public void keyTyped(final KeyEvent e) {
+    public void keyInput(final KeyEvent e, final com.higgs.staged.InputListener.EnumKeyInputType type) {
     }
 
     @Override
-    public void keyPressed(final KeyEvent e) {
-        final int code = e.getKeyCode();
-        switch (code) {
-            case KeyEvent.VK_F12: {
-                Viewport.getCanvas().screenshot();
-                break;
-            }
-        }
-    }
-
-    @Override
-    public void keyReleased(final KeyEvent e) {
+    public void act() {
     }
 }
